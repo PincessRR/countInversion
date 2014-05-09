@@ -1,0 +1,95 @@
+package assignment1;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class inversion {
+	
+	public static long[] mergeSort(int[] list){
+		int length = list.length;
+		return mergeSort(list, 0,length,length);
+	}
+	
+	public static long[] mergeSort(int[] list , int start, int end, int max){
+
+		if(max==start){
+			long[] result = new long[2];
+			result[0] = Integer.MAX_VALUE;
+			result[1] = 0;
+			return result;
+		} 
+		
+		if(start==end){
+			long[] result = new long[2];
+			result[0] = list[start];
+			result[1] = 0;
+			return result;
+		} 
+		
+
+		
+		int mid = (end - start)/2+start;
+		long[] listA = mergeSort(list, start, mid, max);
+		long[] listB = mergeSort(list, mid+1, end, max);
+		
+		int lengthA = listA.length-1;
+		int lengthB = listB.length-1;
+		
+		long[] listC = new long[lengthA+lengthB+1];
+		int pA = 0;
+		int pB = 0;
+		int pC = 0;
+		long inversion = listA[lengthA]+listB[lengthB];
+		
+		while(pA<lengthA&&pB<lengthB){
+		if(listA[pA]<listB[pB]){
+			listC[pC] = listA[pA];
+			pA++;
+			pC++;
+		}else{
+			listC[pC] = listB[pB];
+			inversion += lengthA-pA;
+			pB++;
+			pC++;
+		}
+		}
+		
+		while(pC<lengthA+lengthB){
+		if(pA<lengthA)
+		{
+			listC[pC] = listA[pA];
+			pA++;
+			pC++;
+		}else{
+			listC[pC] = listB[pB];
+			pB++;
+			pC++;
+		}
+		}
+		listC[pC] = inversion; 		
+		
+		return listC;
+	}
+
+	public static void main(String[] args) throws FileNotFoundException{
+		
+		List<Integer> arrays = new ArrayList<Integer>(); 
+		Scanner scanner = new Scanner(new FileReader("data.txt"));
+		while(scanner.hasNextInt())
+			arrays.add(scanner.nextInt());
+		
+		int[] array = new int[arrays.size()];
+		int i =0;
+		for(Integer e:arrays){
+			array[i] = e.intValue();
+			i++;
+		}	
+		long[] result = mergeSort(array);
+		
+		System.out.println(result[result.length-1]);
+	}
+}
