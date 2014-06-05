@@ -1,7 +1,7 @@
 countInversion
 ==============
 
-Solve for algorithm1. assignment 1. Please don't copy.
+Inversion in an array is when smaller number are arranged after bigger number.
 
-This one is not optimized though. The number of inversion is stored at the end of the list. You can check this value by typing out 
-the last element of result.
+This file used mergeSort to sort an array as well as count inversions. Note that it doesn't take more to count inversions as sort an array. It's realized in O(nlogn).
+
